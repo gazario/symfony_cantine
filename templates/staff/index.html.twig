@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello StaffController!{% endblock %}
+
+{% block body %}
+<table class="table table-bordered">
+{% for row in staff %}
+        <tr>
+            <td>{{ row.firstname}} {{row.lastname}}</td>
+            <td>{{ row.fonction }}</td>
+        </tr>
+
+    {% endfor %}
+    </table>
+{% endblock %}
