@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ParentController!{% endblock %}
+
+{% block stylesheets %}
+     <link rel="stylesheet" href="">
+{% endblock %}
+
+{% block body %}
+
+<table class="table table-bordered">
+          <tr>
+               <td>Prenom : </td>
+               <td>{{staff.firstname}}</td>
+          </tr>
+          <tr>
+               <td>Nom : </td>
+               <td>{{staff.lastname}}</td>
+          </tr>
+          <tr>
+               <td>Fonction : </td>
+               <td>{{staff.fonction}}</td>
+          </tr>
+</table>
+<a class="btn btn-primary" href="{{ path('app_staff')}}">Retour</a>
+
+
+
+{% endblock %}

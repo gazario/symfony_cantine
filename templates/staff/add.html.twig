@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ParentController!{% endblock %}
+
+{% block stylesheets %}
+     <link rel="stylesheet" href="">
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+        {# ajout du token pour la gestion du CSRF#}
+        {{ form_widget(form._token) }}
+    <p>
+         {{ form_label(form.firstname) }}
+         Prenom
+         {{ form_widget(form.firstname) }}
+          {{ form_errors(form.firstname) }}
+    </p>
+    <p>
+         {{ form_label(form.lastname) }}
+         Nom de famille
+         {{ form_widget(form.lastname) }}
+    </p>
+       <p>
+         {{ form_label(form.fonction) }}
+         Fonction
+         {{ form_widget(form.fonction) }}
+    </p>
+
+        {{ form_widget(form.valid) }}
+
+    {{ form_end(form, {render_rest:false}) }}
+
+{% endblock %}
