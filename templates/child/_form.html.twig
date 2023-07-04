@@ -1,4 +1,36 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="m-2">
+     {#{{ form_label(form.firstname) }}#}
+     {{"Prenom"}}
+    {{ form_widget(form.firstname) }}
+    </div>
+    <div class="m-2">
+    {{"Nom"}}
+      {# {{ form_label(form.lastname) }}#}
+    {{ form_widget(form.lastname) }}
+       </div>
+    <div class="m-2">
+    {{"Âge"}}
+      {#{{ form_label(form.age) }}#}
+    {{ form_widget(form.age) }}
+       </div>
+    <div class="m-2">
+    {{"Allergies"}}
+     {# {{ form_label(form.allergy) }}#}
+    {{ form_widget(form.allergy) }}
+       </div>
+    <div class="row">
+        <div class="col-6 ml-2">
+            {{"Parent"}}
+            {#{{ form_label(form.user) }}#}
+            {{ form_widget(form.user) }}
+        </div>
+        <div class="col-6 mr-2">
+            {{"Menu"}}
+            {#{{ form_label(form.menu) }}#}
+            {{ form_widget(form.menu) }}
+        </div>
+    </div>
+
+    <button class="btn btn-info mt-4 mb-4">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
