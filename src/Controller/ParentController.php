@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route('/parent')]
 class ParentController extends AbstractController
@@ -16,15 +17,17 @@ class ParentController extends AbstractController
     #[Route('/parent', name: 'app_parent')]
     public function index(UserRepository $userRepository): Response
     {
-        $users = $userRepository->findAll();
+        //$users = $userRepository->findAll();
+        $users = $userRepository->getUserByRole('PARENT');
 
+        //passage des informations vers la vue
         return $this->render('parent/index.html.twig', [
             'users' => $users
         ]);
     }
 
     #[Route('/add', name: 'app_parent_add')]
-    public function add(Request $request, UserRepository $userRepository): Response
+    public function add(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         //definition de l'objet user qui sera remplis
         $user = new User();
@@ -37,7 +40,15 @@ class ParentController extends AbstractController
         //si le formulaire est soumis et valide
         if($form->isSubmitted() && $form->isValid()){
             //on enregistre les données du user en BDD
-            //dump($user);
+            
+            $user->setRoles(['ROLE_PARENT']);
+            
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
             //TODO : mettre en place le hashage du mdp
             $userRepository->save($user,true);
 
@@ -52,7 +63,7 @@ class ParentController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'app_parent_edit')]
-    public function edit(User $user, Request $request, UserRepository $userRepository): Response
+    public function edit(User $user, Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {   
         // appel de l'objet formulaire pour affichage
        $form = $this->createForm(ParentType::class, $user);
@@ -65,6 +76,16 @@ class ParentController extends AbstractController
        if($form->isSubmitted() && $form->isValid()) {
        // On enregistre les données du user en BDD
        // TODO : mettre en place de hashage de mot de passe
+       $user->setRoles(['ROLE_PARENT']);
+       if($form->get('password')->getData() != ''){
+        $user->setPassword(
+            $userPasswordHasher->hashPassword(
+                $user,
+                $form->get('password')->getData()
+            )
+        );
+       }
+       
        // dump($user); -> Le dump s'enclenche avant donc si on laisse la redirection ne marche pas
        $userRepository->save($user, true);
 
