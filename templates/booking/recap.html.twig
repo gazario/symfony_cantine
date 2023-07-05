@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BookingController!{% endblock %}
+{% block stylesheets %}
+     {#<link rel="stylesheet" href="../public/style.css" >  #}
+{% endblock %}
+  
+{% block body %}
+
+    <table class="table table-bordered">
+    <tr>
+        <th>Enfant</th>
+        <th>Jours</th>
+        <th>Prix</th>
+    </tr>
+    {% for child in tabChild %}
+        <tr>
+            <td>{{ child.firstname }} {{ child.lastname }}</td>
+            <td>
+            {# boucle sur le tableau contenant les jours reservés de tous les enfants#}
+                {% for k, tab in tabDay %}
+                {# condition pour afficher les jours de l'enfant concerné par l'itération de la boucle principale#}
+                    {% if k|replace({'date_':''}) == child.id %}
+                        {# boucle pour afficher les jours reservé pour  l'enfant#}
+                        {% for day in tab %}
+                            {# affichage du jour #}
+                            {{ day }} </br>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                {% for key, price in totalByChild %}
+                    {% if key == child.id %}
+                        {{ price }} &euro;
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}
+            <tr>
+            <td colspan="2">Total de la facture pour le mois</td>
+            <td>{{ totalFacture }} &euro;</td>
+        </tr>
+    </table>
+
+{% endblock %}
