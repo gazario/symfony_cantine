@@ -7,6 +7,7 @@ use App\Form\MenuType;
 use App\Repository\MenuRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,8 +15,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class MenuController extends AbstractController
 {
     #[Route('/', name: 'app_menu_index', methods: ['GET'])]
-    public function index(MenuRepository $menuRepository): Response
+    public function index(MenuRepository $menuRepository, RequestStack $requestStack): Response
     {
+        $session = $requestStack->getSession();
+        //dump($session->get('toto'));
+        //$_SESSION['toto']='Vous dit bonjour';
+        //si l'utilisateur se deconnecte ce quil y a dans la session est conservé
+        //dd($_SESSION);
+
         return $this->render('menu/index.html.twig', [
             'menus' => $menuRepository->findAll(),
         ]);

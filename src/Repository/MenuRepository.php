@@ -38,6 +38,10 @@ class MenuRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function countMenu(){
+        return $this->createQueryBuilder('m')
+            ->select('count(m.id)')->getQuery()->getSingleScalarResult();
+    }
 
 //    /**
 //     * @return Menu[] Returns an array of Menu objects
