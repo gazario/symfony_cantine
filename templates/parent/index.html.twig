@@ -10,6 +10,10 @@
         <tr>
             <td>{{ row.firstname}} {{row.lastname}}</td>
             <td>{{ row.email }}</td>
+            <td>{% for child in row.child %}
+                    {{ child.firstname}} {{ child.lastname}}
+                {% endfor %}
+            </td>
             <td>
                 <a href="{{ path('app_parent_detail', {'id':row.id} ) }}" class="btn btn-info fa-solid fa-magnifying-glass" title="Detail"></a>
                 <a href="{{ path('app_parent_edit', {'id':row.id} ) }}" class="btn btn-primary fa-solid fa-pen-to-square" title="Modification"></a>

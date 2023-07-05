@@ -12,6 +12,7 @@
                 <th>Firstname</th>
                 <th>Lastname</th>
                 <th>Age</th>
+                <th>Parent</th>
                 <th>Allergy</th>
                 <th>actions</th>
             </tr>
@@ -23,6 +24,9 @@
                 <td>{{ child.firstname }}</td>
                 <td>{{ child.lastname }}</td>
                 <td>{{ child.age }}</td>
+                <td>
+                    {{ child.user.firstname }} {{ child.user.lastname}}
+                </td>
                 <td>{{ child.allergy }}</td>
                 <td>
                     <a href="{{ path('app_child_show', {'id': child.id}) }}">show</a>
