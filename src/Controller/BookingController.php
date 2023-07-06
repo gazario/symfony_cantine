@@ -133,4 +133,9 @@ class BookingController extends AbstractController
         return $this->redirectToRoute('app_home');
     }
 
+    #[Route('/bookingshow', name: 'app_booking_show')]
+    public function show(): Response
+    {
+        return $this->render('booking/show.html.twig');
+    }
 }
