@@ -20,10 +20,21 @@ class ParentController extends AbstractController
         //$users = $userRepository->findAll();
         $users = $userRepository->getUserByRole('PARENT');
 
-        //passage des informations vers la vue
-        return $this->render('parent/index.html.twig', [
-            'users' => $users
-        ]);
+        //si l'utilisateur est admin tout afficher
+       // if(in_array('ADMIN', $this->getUser()->getRoles())){
+                //passage des informations vers la vue
+         //       $users = $userRepository->findAll();
+                return $this->render('parent/index.html.twig', [
+                    'users' => $users
+                    ]);
+       // } else {
+            //si parent et non admin afficher que ses enfants à lui
+            //$users = $userRepository->findById(array());
+            //return $this->render('parent/index.html.twig', [
+            //  'users' => $users
+            //    ]);
+        //}
+
     }
 
     #[Route('/add', name: 'app_parent_add')]

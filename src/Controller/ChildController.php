@@ -16,8 +16,19 @@ class ChildController extends AbstractController
     #[Route('/', name: 'app_child_index', methods: ['GET'])]
     public function index(ChildRepository $childRepository): Response
     {
+
+        $children = $childRepository->findAll();
+
+        //dump($this->getUser()->getRoles());
+
+        //test dna sle tableau des roles de mon profil si la valeur ROLE_PARENT existe
+        if(in_array('ROLE_PARENT', $this->getUser()->getRoles())){
+            //si je suis un parent, je vais recuperer dans la BDD les enfants qui ont en user_id la valeur de mon user connecté
+            $children = $childRepository->findBy(['user' => $this->getUser()]);
+        }
+
         return $this->render('child/index.html.twig', [
-            'children' => $childRepository->findAll(),
+            'children' => $children
         ]);
     }
 
