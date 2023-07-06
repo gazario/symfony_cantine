@@ -4,28 +4,28 @@
 
 {% block body %}
 
-{% if 'ROLE_ADMIN' in app.user.roles %}
-    <a class="btn btn-success mb-3" href="{{ path('app_parent_add') }}">Ajouter</a>
-{% endif %}
-    <table class="table table-bordered">
-    {% for row in users %}
-        {% if row.id == app.user.id %}
-            <tr>
-                <td>{{ row.firstname}} {{row.lastname}}</td>
-                <td>{{ row.email }}</td>
-                <td>{% for child in row.child %}
-                        {{ child.firstname}} {{ child.lastname}}
-                    {% endfor %}
-                </td>
-                <td>
-                    <a href="{{ path('app_parent_detail', {'id':row.id} ) }}" class="btn btn-info fa-solid fa-magnifying-glass" title="Detail"></a>
-                    <a href="{{ path('app_parent_edit', {'id':row.id} ) }}" class="btn btn-primary fa-solid fa-pen-to-square" title="Modification"></a>
-                {% if 'ROLE_ADMIN' in app.user.roles %}   
-                    <a href="{{ path('app_parent_delete', {'id':row.id}) }}" class="btn btn-danger fa fa-trash" title="Supprimer"></a>
-                {% endif %}
-                </td>
-            </tr>
-        {% endif %}
-    {% endfor %}
-
+    {% if 'ROLE_ADMIN' in app.user.roles %}
+        <a class="btn btn-success mb-3" href="{{ path('app_parent_add') }}">Ajouter</a>
+    {% endif %}
+        <table class="table table-bordered">
+        {% for row in users %}
+            {% if 'ROLE_ADMIN' in app.user.roles or row.id == app.user.id %}
+                <tr>
+                    <td>{{ row.firstname}} {{row.lastname}}</td>
+                    <td>{{ row.email }}</td>
+                    <td>{% for child in row.child %}
+                            {{ child.firstname}} {{ child.lastname}}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{{ path('app_parent_detail', {'id':row.id} ) }}" class="btn btn-info fa-solid fa-magnifying-glass" title="Detail"></a>
+                        <a href="{{ path('app_parent_edit', {'id':row.id} ) }}" class="btn btn-primary fa-solid fa-pen-to-square" title="Modification"></a>
+                    {% if 'ROLE_ADMIN' in app.user.roles %}   
+                        <a href="{{ path('app_parent_delete', {'id':row.id}) }}" class="btn btn-danger fa fa-trash" title="Supprimer"></a>
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    {#{% endif %}#}
 {% endblock %}
